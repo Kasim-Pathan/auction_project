@@ -2,6 +2,21 @@
 @section('title','Product')
 @section('main')
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bid Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { background-color: #f8f9fa; }
+        .bid-card { max-width: 500px; margin: auto; }
+    </style>    
+</head>
+<body>
+
     <!--============= Hero Section Starts Here =============-->
     <div class="hero-section style-2">
         <div class="container">
@@ -18,30 +33,16 @@
             </ul>
         </div>
         <div class="bg_img hero-bg bottom_center" data-background="{{asset('designing/assets/images/banner/hero-bg.png')}}"></div>
-    </div>
     <!--============= Hero Section Ends Here =============-->
     <!-- product Detail -->
      
     <!-- product Detail -->
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Bid Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { background-color: #f8f9fa; }
-        .bid-card { max-width: 500px; margin: auto; }
-    </style>    
-</head>
-<body>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 text-center">
                 <!-- Product image and details -->
-                <img src="" alt="Product" class="img-fluid rounded">
+                <img src="{{asset($product->image)}}" alt="Product" class="img-fluid rounded">
                 <h2 class="mt-3">Product Name</h2>
                 <p class="lead">Current Highest Bid: <strong id="highestBid">$100</strong></p>
                 <p>Time Remaining: <span id="countdown">00:05:00</span></p>
@@ -78,6 +79,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <script>
         // Countdown Timer
@@ -111,6 +113,21 @@
                 alert("Bid must be higher than the current highest bid!"); // Alert user if bid is too low
             }
         });
+    </script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+            
+            var pusher = new Pusher("{{ env('Pusher_key') }}", {
+            cluster: "{{ env('Pusher_cluster') }}",
+            encrypted: true
+            });
+            // let cname = 'var';
+            var channel = pusher.subscribe('channel-kasim');
+            channel.bind('auctoinEvent', function(data) {
+                console.log(data);
+            });
     </script>
 </body>
 </html>

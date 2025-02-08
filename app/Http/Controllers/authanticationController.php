@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Middleware\adminAuthMiddleware;
 
 class authanticationController extends Controller
 {
-    
     // Handle Login
     function login(Request $request){
         $request->validate([
@@ -21,35 +19,32 @@ class authanticationController extends Controller
         $loginCheck = Auth::attempt($loginCheck);
         
         $data = User::where('id','=',Auth::id())->first();
-        // dd($data->toArray());
         if($data->role == 'admin'){
-            // dd('admin panel');
             return redirect()->route('admin.dashboard');
         }
         elseif($data->role == 'user'){
-            // dd('user panle');
             return redirect()->route('user.dashboard');
         }
         else{
             return back()->with('fail', 'Invalid Credentials');
         }
     } 
+
     function registration(Request $request){
-        dd($request->toArray());
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:5|max:12',
-            'role' => 'required'
+        
         ]);
+        // dd($request->toArray());
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->role = $request->role;
         $user->password = bcrypt($request->password);
         $query = $user->save();
         if($query){
-            return back()->with('success', 'You have been successfully registered');
+            return redirect()->route('loginView')->with('success', 'Registration Successful');
         }
         else{
             return back()->with('fail', 'Something went wrong');

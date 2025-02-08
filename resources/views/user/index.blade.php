@@ -2,6 +2,8 @@
 @section('title',"dashboard")
 
 @section('main')
+
+
     <!--============= ScrollToTop Section Starts Here =============-->
     
     <!--============= Banner Section Starts Here =============-->
@@ -31,7 +33,6 @@
     </section>
     <!--============= Banner Section Ends Here =============-->
 
-
     <!--============= Hightlight Slider Section Starts Here =============-->
     <div class="browse-section ash-bg">
         <div class="browse-slider-section mt--140">
@@ -48,7 +49,6 @@
                 <div class="m--15">
                     <div class="browse-slider owl-theme owl-carousel">
                         @foreach($category as $cat)
-                        @if($cat->closing_balance == 0) @continue @endif  
                         <a href="{{route('category_all',$cat->id)}}" class="browse-item">       
                             <img src="{{asset($cat->category_image)}}" alt="auction">
                             <span class="info">{{$cat->category_name}}</span>
@@ -151,7 +151,7 @@
                     <h3 class="title">Register for Free & Start Bidding Now!</h3>
                     <p>From cars to diamonds to iPhones, we have it all.</p>
                 </div>
-                <a href="#" class="custom-button white">Register</a>
+                <a href="{{route('signup')}}" class="custom-button white">Register</a>
             </div>
         </div>
     </section>

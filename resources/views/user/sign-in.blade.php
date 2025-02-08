@@ -332,7 +332,7 @@
                     <div class="section-header mb-0">
                         <h3 class="title mt-0">NEW HERE?</h3>
                         <p>Sign up and create your Account</p>
-                        <a href="" class="custom-button transparent">Sign Up</a>
+                        <a href="{{route('signup')}}" class="custom-button transparent">Sign Up</a>
                     </div>
                 </div>
             </div>

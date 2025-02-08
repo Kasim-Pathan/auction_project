@@ -32,4 +32,9 @@ class fetchController extends Controller
         // dd($product->toArray());
         return view('user.product',compact('product','category'));
     }
+    function place_bid($id){
+        $product=Product::find($id);
+        // dd($product->toarray());     
+        return view('user.main',compact('product'));
+    }
 }
